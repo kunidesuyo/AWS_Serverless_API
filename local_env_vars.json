@@ -4,5 +4,8 @@
   },
   "GetItem": {
     "DDB_ENDPOINT": "http://dynamodb-local:8000"
+  },
+  "DeleteItem": {
+    "DDB_ENDPOINT": "http://dynamodb-local:8000"
   }
 }
