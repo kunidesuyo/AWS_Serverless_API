@@ -64,7 +64,7 @@
 - dynamoDBにテーブルを作成しておく
 
 #### コマンド
-- `sam build`
+- `sam build --use-container`
 - `sam local invoke --docker-network dynamodb-local-network --env-vars local_env_vars.json`
   - 初回だけ実行できる。その後はなぜかエラー？
 - `sam local start-api --docker-network dynamodb-local-network --env-vars local_env_vars.json`
