@@ -74,3 +74,10 @@
 
 ## TODO
 - IAM Identity Centerを使用する
+
+## 参考資料
+[sam使ったブログ](https://dev.classmethod.jp/articles/aws-serverless-application-model/)
+[serverless essential](https://pages.awscloud.com/rs/112-TZM-766/images/20200827_serverless_essential.pdf)
+[dynamodb 概要](https://www.wakuwakubank.com/posts/639-aws-dynamodb-introduction/#index_id1)
+[dynamodb javascript](https://maku.blog/p/5mv5dkt/)
+[samについて](https://pages.awscloud.com/rs/112-TZM-766/images/20221124_24th_ISV_DiveDeepSeminar_LambdaESbuild.pdf)
