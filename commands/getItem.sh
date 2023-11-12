@@ -1,0 +1,1 @@
+curl http://127.0.0.1:3000/getItem/ba447cf5-5989-41f9-a5e7-847741be1ee1

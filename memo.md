@@ -64,18 +64,13 @@
 - dynamoDBにテーブルを作成しておく
 
 #### コマンド
-- `sam build`
+- `sam build --use-container`
 - `sam local invoke --docker-network dynamodb-local-network --env-vars local_env_vars.json`
   - 初回だけ実行できる。その後はなぜかエラー？
 - `sam local start-api --docker-network dynamodb-local-network --env-vars local_env_vars.json`
-  - `curl http://127.0.0.1:3000/hello`
+  - `curl http://127.0.0.1:3000/`
 - dynamodb(local)のテーブル作成
-  - `aws dynamodb create-table --table-name my-table --attribute-definitions AttributeName=timestamp,AttributeType=S --key-schema AttributeName=timestamp,KeyType=HASH --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 --endpoint-url http://localhost:8000`
+  - `aws dynamodb create-table --table-name my-table --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 --endpoint-url http://localhost:8000`
 
 ## TODO
-- TypeScriptからdynamodbを操作
-  - endpoint増やす
-  - リクエストパラメータ使えるようにする
-  - crud
 - IAM Identity Centerを使用する
-- sam sync --watchが動かない原因調査

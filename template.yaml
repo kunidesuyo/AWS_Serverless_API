@@ -11,11 +11,11 @@ Globals:
     Timeout: 3
 
 Resources:
-  HelloWorldFunction:
+  PutItemFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: hello-world/
-      Handler: app.lambdaHandler
+      Handler: putItem.lambdaHandler
       Runtime: nodejs18.x
       Architectures:
         - x86_64
@@ -28,7 +28,35 @@ Resources:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /hello
+            Path: /putItem/{content}
+            Method: POST
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints: 
+        - putItem.ts
+    
+  GetItemFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: hello-world/
+      Handler: getItem.lambdaHandler
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      Policies:
+        - AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          DDB_ENDPOINT: ''
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /getItem/{id}
             Method: get
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
@@ -37,13 +65,70 @@ Resources:
         Target: "es2020"
         Sourcemap: true
         EntryPoints: 
-        - app.ts
+        - getItem.ts
+
+  DeleteItemFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: hello-world/
+      Handler: deleteItem.lambdaHandler
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      Policies:
+        - AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          DDB_ENDPOINT: ''
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /deleteItem/{id}
+            Method: delete
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints: 
+        - deleteItem.ts
+  
+  UpdateItemFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: hello-world/
+      Handler: updateItem.lambdaHandler
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      Policies:
+        - AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          DDB_ENDPOINT: ''
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /updateItem/{id}/{content}
+            Method: PUT
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints: 
+        - updateItem.ts
+
   DynamoDBTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
       TableName: my-table
       PrimaryKey:
-        Name: timestamp
+        Name: id
         Type: String
       ProvisionedThroughput:
         ReadCapacityUnits: 1
@@ -56,9 +141,27 @@ Outputs:
   HelloWorldApi:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
+  PutItemFunction:
     Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
+    Value: !GetAtt PutItemFunction.Arn
+  PutItemFunctionIamRole:
     Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+    Value: !GetAtt PutItemFunctionRole.Arn
+  GetItemFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt GetItemFunction.Arn
+  GetItemFunctionIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt GetItemFunctionRole.Arn
+  DeleteItemFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt DeleteItemFunction.Arn
+  DeleteItemFunctionIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt DeleteItemFunctionRole.Arn
+  UpdateItemFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt UpdateItemFunction.Arn
+  UpdateItemFunctionIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt UpdateItemFunctionRole.Arn

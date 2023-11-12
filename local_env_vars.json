@@ -1,5 +1,14 @@
 {
-  "HelloWorldFunction": {
+  "PutItemFunction": {
+    "DDB_ENDPOINT": "http://dynamodb-local:8000"
+  },
+  "GetItemFunction": {
+    "DDB_ENDPOINT": "http://dynamodb-local:8000"
+  },
+  "DeleteItemFunction": {
+    "DDB_ENDPOINT": "http://dynamodb-local:8000"
+  },
+  "UpdateItemFunction": {
     "DDB_ENDPOINT": "http://dynamodb-local:8000"
   }
 }
