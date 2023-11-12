@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
-import { AttributeValue, DynamoDBClient, PutItemCommand } from '@aws-sdk/client-dynamodb'
+import { AttributeValue, DynamoDBClient, PutItemCommand, PutItemCommandInput, PutItemCommandOutput } from '@aws-sdk/client-dynamodb'
 import crypto from 'crypto'
 
 const client = new DynamoDBClient({
@@ -18,22 +18,21 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
                 body: JSON.stringify({
                     message: 'please path parameters',
                 }),
-            }
+            };
         }
-        const timestamp: AttributeValue = { S: Date.now().toString() };
-        const id: AttributeValue = { S: event.pathParameters.id! };
+        const id: AttributeValue = { S: crypto.randomUUID() };
+        const content: AttributeValue = { S: event.pathParameters.content! };
 
-        const input = {
+        const input: PutItemCommandInput = {
             TableName: 'my-table',
             Item: {
                 id: id,
-                timestamp: timestamp,
+                content: content,
             },
-        }
+        };
 
-        const command = new PutItemCommand(input)
-        const response = await client.send(command)
-        console.log(response);
+        const command: PutItemCommand = new PutItemCommand(input);
+        const response: PutItemCommandOutput = await client.send(command);
 
         return {
             statusCode: 200,

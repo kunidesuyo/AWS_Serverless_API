@@ -28,7 +28,7 @@ Resources:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /putItem/{id}
+            Path: /putItem/{content}
             Method: POST
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
@@ -128,7 +128,7 @@ Resources:
     Properties:
       TableName: my-table
       PrimaryKey:
-        Name: timestamp
+        Name: id
         Type: String
       ProvisionedThroughput:
         ReadCapacityUnits: 1
