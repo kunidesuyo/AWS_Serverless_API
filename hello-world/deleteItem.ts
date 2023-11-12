@@ -21,18 +21,17 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
             }
         }
         
-        const timestamp: AttributeValue = { S: event.pathParameters.timestamp! };
+        const id: AttributeValue = { S: event.pathParameters.id! };
 
         const params: DeleteItemCommandInput = {
             TableName: 'my-table',
             Key: {
-                timestamp: timestamp
+                id: id
             }
         };
 
         const command = new DeleteItemCommand(params)
         const response = await client.send(command)
-        console.log(response);
 
         return {
             statusCode: 200,

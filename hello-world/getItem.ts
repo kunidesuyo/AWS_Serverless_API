@@ -21,12 +21,12 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
             }
         }
         
-        const timestamp: AttributeValue = { S: event.pathParameters.timestamp! };
+        const id: AttributeValue = { S: event.pathParameters.id! };
 
         const params: GetItemCommandInput = {
             TableName: 'my-table',
             Key: {
-                timestamp: timestamp
+                id: id
             }
         };
 

@@ -56,7 +56,7 @@ Resources:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /getItem/{timestamp}
+            Path: /getItem/{id}
             Method: get
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
@@ -84,7 +84,7 @@ Resources:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /deleteItem/{timestamp}
+            Path: /deleteItem/{id}
             Method: delete
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
@@ -112,7 +112,7 @@ Resources:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /updateItem/{timestamp}/{id}
+            Path: /updateItem/{id}/{content}
             Method: PUT
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild

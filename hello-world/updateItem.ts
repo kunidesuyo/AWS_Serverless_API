@@ -21,23 +21,22 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
             }
         }
         
-        const timestamp: AttributeValue = { S: event.pathParameters.timestamp! };
         const id: AttributeValue = { S: event.pathParameters.id! };
+        const content: AttributeValue = { S: event.pathParameters.content! };
 
         const params: UpdateItemCommandInput = {
             TableName: 'my-table',
             Key: {
-              timestamp: timestamp,
+              id: id,
             },
-            UpdateExpression: 'set id = :x',
+            UpdateExpression: 'set content = :x',
             ExpressionAttributeValues: {
-              ':x': id,
+              ':x': content,
            },
         };
 
         const command = new UpdateItemCommand(params);
         const response = await client.send(command);
-        console.log(response);
 
         return {
             statusCode: 200,
@@ -46,7 +45,6 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
             },
             body: JSON.stringify({
                 message: 'success',
-                // item: response.Item,
             }),
         }
     } catch (err) {
